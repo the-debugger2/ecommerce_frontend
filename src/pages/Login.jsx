@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
+   
 // ─── Login Sub-component ───────────────────────────────────────────────────
 const LoginForm = ({ onSwitch }) => {
   const { login } = useContext(AuthContext);
@@ -193,7 +194,9 @@ const RegisterForm = ({ onSwitch }) => {
 // ─── AuthPage Shell ────────────────────────────────────────────────────────
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-
+// Inside the AuthPage component, before the return:
+const { userInfo } = useContext(AuthContext);
+if (userInfo) return <Navigate to="/" replace />;
   return (
     <div className="auth-page">
       {/* Decorative background elements */}

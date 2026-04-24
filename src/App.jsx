@@ -9,6 +9,7 @@ import Cart from "./pages/Cart";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import FloatingCart from "./components/FloatingCart";
 import UserMenu from "./components/UserMenu";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -18,10 +19,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/product/:id" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/product/:id" element={<ProtectedRoute><Product /></ProtectedRoute>} />
+        {/* Protected — redirects to /auth if not logged in */}
+  <Route path="/cart" element={
+    <ProtectedRoute><Cart /></ProtectedRoute>
+  } />
+  <Route path="/checkout" element={
+    <ProtectedRoute><Checkout /></ProtectedRoute>
+  } />
+  <Route path="/orders" element={
+    <ProtectedRoute><Orders /></ProtectedRoute>
+  } />
         <Route
   path="/admin"
   element={
