@@ -12,10 +12,22 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await API.get("/products");
-      setProducts(data);
-      setFiltered(data);
-      setLoaded(true);
+      try {
+        const { data } = await API.get("/products");
+        
+        // CHECK: If your backend sends { products: [] }, use data.products
+        // If it sends the array directly, use data
+        const productArray = Array.isArray(data) ? data : data.products || [];
+        
+        setProducts(productArray);
+        setFiltered(productArray);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setProducts([]);
+        setFiltered([]);
+      } finally {
+        setLoaded(true);
+      }
     };
     fetchProducts();
   }, []);

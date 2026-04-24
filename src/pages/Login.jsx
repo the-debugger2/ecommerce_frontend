@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+// ADDED 'Navigate' to this import line
+import { useNavigate, Navigate } from "react-router-dom"; 
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
-   
 // ─── Login Sub-component ───────────────────────────────────────────────────
 const LoginForm = ({ onSwitch }) => {
   const { login } = useContext(AuthContext);
@@ -67,7 +67,7 @@ const LoginForm = ({ onSwitch }) => {
         </div>
 
         <button className="auth-btn" type="submit" disabled={loading}>
-          {loading ? <span className="btn-spinner" /> : "Sign In"}
+          {loading ? "Loading..." : "Sign In"}
         </button>
       </form>
 
@@ -177,7 +177,7 @@ const RegisterForm = ({ onSwitch }) => {
         </div>
 
         <button className="auth-btn" type="submit" disabled={loading}>
-          {loading ? <span className="btn-spinner" /> : "Create Account"}
+          {loading ? "Creating..." : "Create Account"}
         </button>
       </form>
 
@@ -194,12 +194,15 @@ const RegisterForm = ({ onSwitch }) => {
 // ─── AuthPage Shell ────────────────────────────────────────────────────────
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-// Inside the AuthPage component, before the return:
-const { userInfo } = useContext(AuthContext);
-if (userInfo) return <Navigate to="/" replace />;
+  const { userInfo } = useContext(AuthContext);
+
+  // If user is already logged in, redirect them immediately
+  if (userInfo) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <div className="auth-page">
-      {/* Decorative background elements */}
       <div className="auth-bg">
         <div className="bg-circle bg-circle--1" />
         <div className="bg-circle bg-circle--2" />
@@ -207,7 +210,6 @@ if (userInfo) return <Navigate to="/" replace />;
       </div>
 
       <div className="auth-card">
-        {/* Tab toggle */}
         <div className="auth-tabs">
           <button
             className={`auth-tab ${isLogin ? "auth-tab--active" : ""}`}
@@ -224,14 +226,17 @@ if (userInfo) return <Navigate to="/" replace />;
           <div className={`tab-indicator ${isLogin ? "" : "tab-indicator--right"}`} />
         </div>
 
-        {/* Animated form area */}
         <div className="auth-body">
-          <div className={`form-slide ${isLogin ? "form-slide--visible" : "form-slide--hidden"}`}>
-            <LoginForm onSwitch={() => setIsLogin(false)} />
-          </div>
-          <div className={`form-slide ${!isLogin ? "form-slide--visible" : "form-slide--hidden"}`}>
-            <RegisterForm onSwitch={() => setIsLogin(true)} />
-          </div>
+          {/* Using conditional rendering here is often cleaner than classes alone */}
+          {isLogin ? (
+            <div className="form-slide form-slide--visible">
+              <LoginForm onSwitch={() => setIsLogin(false)} />
+            </div>
+          ) : (
+            <div className="form-slide form-slide--visible">
+              <RegisterForm onSwitch={() => setIsLogin(true)} />
+            </div>
+          )}
         </div>
       </div>
     </div>
