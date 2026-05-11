@@ -15,8 +15,8 @@
     --text: #e8e4dc;
     --text-muted: #7a7570;
     --text-dim: #4a4642;
-    --accent: #4dd443;
-    --accent-dark: #40a82e;
+    --accent: #9843d4;
+    --accent-dark: #6b1a8a;
     --accent-glow: rgba(212, 168, 67, 0.15);
     --error: #c0392b;
     --error-bg: rgba(192, 57, 43, 0.1);
@@ -2592,6 +2592,470 @@ Copy
 .floating-cart {
     right: 4.75rem;
     /* avoid overlapping user button */
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   STRIPE CHECKOUT ADDITIONS — append to end of app.css
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ── Step indicator ────────────────────────────────────────────── */
+
+.checkout-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 2rem;
+    max-width: 260px;
+}
+
+.checkout-step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkout-step__num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    flex-shrink: 0;
+}
+
+.checkout-step__label {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+.checkout-step--active .checkout-step__num {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0f0f0f;
+}
+
+.checkout-step--active .checkout-step__label {
+    color: var(--text);
+}
+
+.checkout-step--done .checkout-step__num {
+    background: #4caf82;
+    border-color: #4caf82;
+    color: #0f0f0f;
+}
+
+.checkout-step__line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin: 0 0.75rem;
+    min-width: 40px;
+}
+
+
+/* ── Stripe card element wrapper ───────────────────────────────── */
+
+.stripe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.stripe-card-wrap {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.8rem 0.9rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.stripe-card-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.stripe-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 0.4rem;
+    font-style: italic;
+}
+
+
+/* ── Shipping summary on payment step ──────────────────────────── */
+
+.checkout-shipping-summary {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ADMIN DASHBOARD ADDITIONS — append to end of app.css
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ── New product button ────────────────────────────────────────── */
+
+.admin-new-btn {
+    max-width: 160px;
+    flex-shrink: 0;
+}
+
+
+/* ── Stat Cards Grid ───────────────────────────────────────────── */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    overflow: hidden;
+    transition: border-color var(--transition), transform var(--transition);
+    animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stat-card:hover {
+    border-color: var(--stat-accent, var(--border-light));
+    transform: translateY(-2px);
+}
+
+.stat-card__glow {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--stat-accent, var(--accent));
+    opacity: 0.06;
+    filter: blur(20px);
+    pointer-events: none;
+}
+
+.stat-card__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.stat-card__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.stat-card__value {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stat-card__label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+
+/* ── Admin Tabs ────────────────────────────────────────────────── */
+
+.admin-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.75rem;
+}
+
+.admin-tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    padding: 0.75rem 1.25rem 0.75rem 0;
+    margin-bottom: -1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.admin-tab-btn:hover {
+    color: var(--text);
+}
+
+.admin-tab-btn--active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.admin-tab-count {
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.1rem 0.45rem;
+    color: var(--text-muted);
+}
+
+.admin-tab-count--alert {
+    background: rgba(212, 168, 67, 0.15);
+    border-color: rgba(212, 168, 67, 0.3);
+    color: var(--accent);
+}
+
+
+/* ── Low stock badge on product card ───────────────────────────── */
+
+.product-card__low-stock {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0.6rem;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #e67e22;
+    background: rgba(15, 15, 15, 0.8);
+    border: 1px solid rgba(230, 126, 34, 0.3);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    backdrop-filter: blur(4px);
+}
+
+
+/* ── Orders Table ──────────────────────────────────────────────── */
+
+.orders-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.orders-table thead {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+}
+
+.orders-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.orders-table td {
+    padding: 0.875rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+}
+
+.orders-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.orders-table tbody tr {
+    transition: background var(--transition);
+}
+
+.orders-table tbody tr:hover {
+    background: var(--surface-2);
+}
+
+.orders-table__date {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+}
+
+.orders-table__name {
+    display: block;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.orders-table__email {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.action-btn--deliver {
+    background: rgba(76, 175, 130, 0.1);
+    border-color: rgba(76, 175, 130, 0.25);
+    color: #4caf82;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.action-btn--deliver:hover {
+    background: rgba(76, 175, 130, 0.2);
+    border-color: #4caf82;
+}
+
+.action-btn--deliver:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ── Product Modal ─────────────────────────────────────────────── */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    animation: fadeIn 150ms ease both;
+}
+
+.modal-panel {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    animation: modalDrop 250ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: center top;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+}
+
+.modal-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.modal-close {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+}
+
+.modal-close:hover {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.modal-body {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.modal-submit-btn {
+    max-width: 160px;
+}
+
+@media (max-width: 640px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .modal-panel {
+        max-height: 95vh;
+    }
+    .orders-table th:nth-child(3),
+    .orders-table td:nth-child(3) {
+        display: none;
+    }
 }
 
 
